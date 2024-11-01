@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample HTML Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+        nav {
+            margin: 10px 0;
+        }
+        nav a {
+            margin-right: 10px;
+            color: #4CAF50;
+            text-decoration: none;
+        }
+        section {
+            margin: 20px 0;
+        }
+        footer {
+            background-color: #f1f1f1;
+            color: #333;
+            text-align: center;
+            padding: 10px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header section with an h1 tag -->
+    <header>
+        <h1>Welcome to My Sample Page</h1>
+        <p>This is a simple HTML page with various tags</p>
+    </header>
+
+    <!-- Navigation links -->
+    <nav>
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#contact">Contact</a>
+    </nav>
+
+    <!-- Main content area with sections -->
+    <main>
+        <!-- Section with an h2, p, and an image tag -->
+        <section id="about">
+            <h2>About Us</h2>
+            <p>This section contains information about our company. We provide high-quality services to our clients.</p>
+            <img src="https://via.placeholder.com/150" alt="Company image">
+        </section>
+
+        <!-- Section with an ordered list -->
+        <section id="services">
+            <h2>Our Services</h2>
+            <ol>
+                <li>Web Development</li>
+                <li>App Development</li>
+                <li>Consulting</li>
+            </ol>
+        </section>
+
+        <!-- Contact form section with input and textarea tags -->
+        <section id="contact">
+            <h2>Contact Us</h2>
+            <form>
+                <label for="name">Name:</label><br>
+                <input type="text" id="name" name="name" required><br><br>
+
+                <label for="email">Email:</label><br>
+                <input type="email" id="email" name="email" required><br><br>
+
+                <label for="message">Message:</label><br>
+                <textarea id="message" name="message" rows="4" required></textarea><br><br>
+
+                <button type="submit">Submit</button>
+            </form>
+        </section>
+    </main>
+
+    <!-- Footer with copyright information -->
+    <footer>
+        <p>&copy; 2024 My Sample Company. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
