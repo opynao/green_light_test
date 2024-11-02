@@ -20,23 +20,25 @@
 
 ## Подходы к решению задачи
 
-1. async с future
+1. **async с future**
+   
 В этом подходе можно асинхронно запускать дочерний поток с помощью std::async, который возвращает std::future. 
 
-    auto futureResult = std::async(std::launch::async, countAndSortTags, htmlContent);
-    printTagCounts(futureResult.get());
+    `auto futureResult = std::async(std::launch::async, countAndSortTags, htmlContent);
+    printTagCounts(futureResult.get());`
 
-2. thread с promise
+3. **thread с promise**
+   
 В этом случае создается поток с помощью std::thread, который использует std::promise для передачи результатов выполнения обратно в родительский поток. 
 
-    std::promise<tagsCount_t> resultPromise;
+    `std::promise<tagsCount_t> resultPromise;
     std::future<tagsCount_t> resultFuture = resultPromise.get_future();
 
     std::thread childThread(countAndSortTags, htmlContent, std::move(resultPromise));
 
     const tagsCount_t tagCounts = resultFuture.get();
     childThread.join();
-    printTagCounts(tagCounts);
+    printTagCounts(tagCounts);`
 
 Я написала обе реализации. thread с promise подходит, если нужна гибкость и полный контроль над потоками. async с future обеспечивает простоту и легкость в использовании.
 
