@@ -13,6 +13,7 @@
     cd green_light_test
     mkdir build
     cd build
+    cmake ..
     cmake --build .
     ./tests/tests // запуск тестов
     ./src/green_light_project ../index.html // запуск программы
