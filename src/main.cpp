@@ -1,15 +1,24 @@
 #include "HtmlTagUtils.h"
-#include "FileUtils.h"
 
 #include <iostream>
 #include <thread>
 #include <future>
+#include <fstream>
 
 void printTagCounts(const tagsCount_t &sortedTags)
 {
     std::cout << "HTML tags and their quantity in file sorted in descending order:\n";
     for (const auto &[tag, count] : sortedTags)
         std::cout << "<" << tag << "> - " << count << std::endl;
+}
+
+std::string readFile(const std::string &filePath)
+{
+    std::ifstream file(filePath);
+    if (!file.is_open())
+        return "";
+    std::string htmlContent((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
+    return htmlContent;
 }
 
 int main(int argc, char *argv[])
