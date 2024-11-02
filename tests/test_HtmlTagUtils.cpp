@@ -64,3 +64,17 @@ TEST(HtmlTagCounterTest, TagsWithMixedCase)
     const htmlTagCount_t expected = {{"div", 2}};
     EXPECT_EQ(countTags(htmlContent), expected);
 }
+
+TEST(CountTagsTests, SingleTag)
+{
+    const std::string htmlContent = "<img />";
+    const htmlTagCount_t expected = {{"img", 1}};
+    EXPECT_EQ(countTags(htmlContent), expected);
+}
+
+TEST(CountTagsTests, UnclosedTags)
+{
+    const std::string htmlContent = "<div><p>content";
+    const htmlTagCount_t expected = {{"div", 1}, {"p", 1}};
+    EXPECT_EQ(countTags(htmlContent), expected);
+}
