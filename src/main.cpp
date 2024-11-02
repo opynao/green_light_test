@@ -1,38 +1,33 @@
-#include "HtmlTagCounter.h"
+#include "HtmlTagUtils.h"
 #include "FileUtils.h"
-#include "TagStatistics.h"
 
 #include <iostream>
-#include <vector>
 #include <thread>
-#include <future>
 
 int main(int argc, char *argv[])
 {
     if (argc < 2)
     {
-        std::cerr << "Укажите путь к файлу HTML в качестве аргумента." << std::endl;
+        std::cerr << "Specify the path to the HTML file as an argument." << std::endl;
         return 1;
     }
 
     std::string htmlContent = readFile(argv[1]);
     if (htmlContent.empty())
     {
-        std::cerr << "Не удалось открыть файл: " << argv[1] << std::endl;
+        std::cerr << "Failed to open the file or file content is empty." << std::endl;
         return 1;
     }
 
-    std::promise<std::unordered_map<std::string, int>> resultPromise;
-    std::future<std::unordered_map<std::string, int>> resultFuture = resultPromise.get_future();
+    std::promise<tagCounts_t> resultPromise;
+    std::future<tagCounts_t> resultFuture = resultPromise.get_future();
 
     std::thread childThread(processHtmlContent, htmlContent, std::move(resultPromise));
 
-    std::unordered_map<std::string, int> tagCounts = resultFuture.get();
+    const tagCounts_t tagCounts = resultFuture.get();
     childThread.join();
 
-    std::vector<std::pair<std::string, int>> sortedTags(tagCounts.begin(), tagCounts.end());
-    sortTagsByCount(sortedTags);
-    printTagCounts(sortedTags);
+    printTagCounts(tagCounts);
 
     return 0;
 }
