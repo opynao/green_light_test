@@ -36,15 +36,8 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    std::promise<tagsCount_t> resultPromise;
-    std::future<tagsCount_t> resultFuture = resultPromise.get_future();
-
-    std::thread childThread(countAndSortTags, htmlContent, std::move(resultPromise));
-
-    const tagsCount_t tagCounts = resultFuture.get();
-    childThread.join();
-
-    printTagCounts(tagCounts);
+    auto futureResult = std::async(std::launch::async, countAndSortTags, htmlContent);
+    printTagCounts(futureResult.get());
 
     return 0;
 }

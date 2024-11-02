@@ -9,7 +9,7 @@
 using htmlTagCount_t = std::unordered_map<std::string, int>;
 using tagsCount_t = std::vector<std::pair<std::string, int>>;
 
-void countAndSortTags(const std::string &htmlContent, std::promise<tagsCount_t> &&resultPromise);
+tagsCount_t countAndSortTags(const std::string &);
 htmlTagCount_t countTags(const std::string &);
 
 #endif // HTML_TAG_UTILS_H

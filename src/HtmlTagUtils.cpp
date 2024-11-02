@@ -13,12 +13,12 @@ void sortTagsByCount(tagsCount_t &tags)
                       { return b.second < a.second; });
 }
 
-void countAndSortTags(const std::string &htmlContent, std::promise<tagsCount_t> &&resultPromise)
+tagsCount_t countAndSortTags(const std::string &htmlContent)
 {
     const htmlTagCount_t &tagCounts = countTags(htmlContent);
     tagsCount_t tags(tagCounts.cbegin(), tagCounts.cend());
     sortTagsByCount(tags);
-    resultPromise.set_value(tags);
+    return tags;
 }
 
 htmlTagCount_t countTags(const std::string &htmlContent)
