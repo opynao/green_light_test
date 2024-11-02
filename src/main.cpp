@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    std::string htmlContent = readFile(argv[1]);
+    const std::string htmlContent = readFile(argv[1]);
     if (htmlContent.empty())
     {
         std::cerr << "Failed to open the file or file content is empty." << std::endl;

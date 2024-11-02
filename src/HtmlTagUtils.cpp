@@ -7,18 +7,18 @@
 #include <algorithm>
 #include <regex>
 
+void sortTagsByCount(tagCounts_t &tags)
+{
+    std::sort(tags.begin(), tags.end(), [](const auto &a, const auto &b)
+              { return b.second < a.second; });
+}
+
 void processHtmlContent(const std::string &htmlContent, std::promise<tagCounts_t> resultPromise)
 {
     const htmlTagCount_t &tagCounts = countTags(htmlContent);
     tagCounts_t tags(tagCounts.cbegin(), tagCounts.cend());
     sortTagsByCount(tags);
     resultPromise.set_value(tags);
-}
-
-void sortTagsByCount(tagCounts_t &tags)
-{
-    std::sort(tags.begin(), tags.end(), [](const auto &a, const auto &b)
-              { return b.second < a.second; });
 }
 
 htmlTagCount_t countTags(const std::string &htmlContent)
