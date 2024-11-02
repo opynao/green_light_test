@@ -3,6 +3,14 @@
 
 #include <iostream>
 #include <thread>
+#include <future>
+
+void printTagCounts(const tagsCount_t &sortedTags)
+{
+    std::cout << "HTML tags and their quantity in file sorted in descending order:\n";
+    for (const auto &[tag, count] : sortedTags)
+        std::cout << "<" << tag << "> - " << count << std::endl;
+}
 
 int main(int argc, char *argv[])
 {
@@ -19,12 +27,12 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    std::promise<tagCounts_t> resultPromise;
-    std::future<tagCounts_t> resultFuture = resultPromise.get_future();
+    std::promise<tagsCount_t> resultPromise;
+    std::future<tagsCount_t> resultFuture = resultPromise.get_future();
 
-    std::thread childThread(processHtmlContent, htmlContent, std::move(resultPromise));
+    std::thread childThread(countAndSortTags, htmlContent, std::move(resultPromise));
 
-    const tagCounts_t tagCounts = resultFuture.get();
+    const tagsCount_t tagCounts = resultFuture.get();
     childThread.join();
 
     printTagCounts(tagCounts);

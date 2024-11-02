@@ -7,16 +7,16 @@
 #include <algorithm>
 #include <regex>
 
-void sortTagsByCount(tagCounts_t &tags)
+void sortTagsByCount(tagsCount_t &tags)
 {
-    std::sort(tags.begin(), tags.end(), [](const auto &a, const auto &b)
-              { return b.second < a.second; });
+    std::ranges::sort(tags, [](const auto &a, const auto &b)
+                      { return b.second < a.second; });
 }
 
-void processHtmlContent(const std::string &htmlContent, std::promise<tagCounts_t> resultPromise)
+void countAndSortTags(const std::string &htmlContent, std::promise<tagsCount_t> &&resultPromise)
 {
     const htmlTagCount_t &tagCounts = countTags(htmlContent);
-    tagCounts_t tags(tagCounts.cbegin(), tagCounts.cend());
+    tagsCount_t tags(tagCounts.cbegin(), tagCounts.cend());
     sortTagsByCount(tags);
     resultPromise.set_value(tags);
 }
@@ -42,11 +42,4 @@ htmlTagCount_t countTags(const std::string &htmlContent)
     }
 
     return tagCounts;
-}
-
-void printTagCounts(const tagCounts_t &sortedTags)
-{
-    std::cout << "HTML tags and their quantity in file sorted in descending order:\n";
-    for (const auto &tag : sortedTags)
-        std::cout << "<" << tag.first << "> - " << tag.second << std::endl;
 }
